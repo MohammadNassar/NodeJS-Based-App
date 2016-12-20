@@ -3,7 +3,17 @@ var express = require('express');
 var app = express();
 
 app.get('/', function (req, res) {
+	console.log('Received a GET request to the the homepage');
 	res.send('Welcome to my web application!');
+});
+
+app.get('/list_user', function(req, res) {
+	console.log('Received a GET request to the \'/list_user\'');
+	res.send('Page Listing');
+});
+
+app.get('/ab*cd', function(req, res) {
+	console.log('Received a GET request for page/s \'ab*cd\'');
 });
 
 var server = app.listen(8081, function () {
