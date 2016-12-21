@@ -34,6 +34,22 @@ app.get('/process_form_get', function(req, res) {
 	res.end(JSON.stringify(response));
 });
 
+/* Responding to with POST requests */
+var body_parser = require('body-parser');
+
+// Creating application/x-www-form-urlencoded parser
+var url_encoded_parser = body_parser.urlencoded({ extended : false });
+
+app.post('/process_form_post', url_encoded_parser, function(req, res) {
+	response = {
+		first_name : req.body.first_name,
+		last_name : req.body.last_name
+	};
+	console.log(response);
+	res.end(JSON.stringify(response));
+});
+/* End of responding to POST requests */
+
 var server = app.listen(8081, function () {
 	var host = server.address().address;
 	var port = server.address().port;
