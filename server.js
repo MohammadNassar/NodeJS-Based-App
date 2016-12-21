@@ -1,6 +1,11 @@
 
 var express = require('express');
 var app = express();
+var body_parser = require('body-parser');
+
+app.use(express.static('public')); // This line allows access to static files, e.g. '/images/bg.png'
+
+var url_encoded_parser = body_parser.urlencoded({ extended : false }); // Creating application/x-www-form-urlencoded parser
 
 app.get('/', function (req, res) {
 	console.log('Received a GET request to the the homepage');
@@ -17,9 +22,6 @@ app.get('/ab*cd', function(req, res) {
 	res.send('Page Pattern Matched (Using a Regular Expression)');
 });
 
-// The following line allows access to static files, e.g. '/images/bg.png'
-app.use(express.static('public'));
-
 app.get('/index', function(req, res) {
 	res.sendFile(__dirname + '/index.htm');
 });
@@ -34,12 +36,6 @@ app.get('/process_form_get', function(req, res) {
 	res.end(JSON.stringify(response));
 });
 
-/* Responding to with POST requests */
-var body_parser = require('body-parser');
-
-// Creating application/x-www-form-urlencoded parser
-var url_encoded_parser = body_parser.urlencoded({ extended : false });
-
 app.post('/process_form_post', url_encoded_parser, function(req, res) {
 	response = {
 		first_name : req.body.first_name,
@@ -48,7 +44,6 @@ app.post('/process_form_post', url_encoded_parser, function(req, res) {
 	console.log(response);
 	res.end(JSON.stringify(response));
 });
-/* End of responding to POST requests */
 
 var server = app.listen(8081, function () {
 	var host = server.address().address;
