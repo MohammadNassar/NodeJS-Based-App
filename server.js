@@ -4,11 +4,13 @@ var app = express();
 var body_parser = require('body-parser');
 var fs = require('fs');
 var multer = require('multer');
+var cookie_parser = require('cookie-parser');
 
 app.use(express.static('public')); // This line allows access to static files, e.g. '/images/bg.png'
 app.use(body_parser.urlencoded({ extended : false }));
 app.use(multer({ dest : './uploads/' }).array('file'));
 //app.use(multer({ dest : './uploads/' }).any());
+app.use(cookie_parser());
 
 var url_encoded_parser = body_parser.urlencoded({ extended : false }); // Creating application/x-www-form-urlencoded parser
 
@@ -29,6 +31,11 @@ app.get('/ab*cd', function(req, res) {
 
 app.get('/index', function(req, res) {
 	res.sendFile(__dirname + '/index.htm');
+});
+
+app.get('/cookies', function(req, res) {
+	console.log('Cookies: ', req.cookies);
+	res.send('Find cookies in the console!');
 });
 
 app.get('/process_form_get', function(req, res) {
