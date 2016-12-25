@@ -2,8 +2,13 @@
 var express = require('express');
 var app = express();
 var body_parser = require('body-parser');
+var fs = require('fs');
+var multer = require('multer');
 
 app.use(express.static('public')); // This line allows access to static files, e.g. '/images/bg.png'
+app.use(body_parser.urlencoded({ extended : false }));
+app.use(multer({ dest : './uploads/' }).array('file'));
+//app.use(multer({ dest : './uploads/' }).any());
 
 var url_encoded_parser = body_parser.urlencoded({ extended : false }); // Creating application/x-www-form-urlencoded parser
 
@@ -43,6 +48,28 @@ app.post('/process_form_post', url_encoded_parser, function(req, res) {
 	};
 	console.log(response);
 	res.end(JSON.stringify(response));
+});
+
+app.post('/file_upload', function(req, res) {
+	console.log(req.files.file.name);
+	console.log(req.files.file.path);
+	console.log(req.files.file.type);
+	var file = __dirname + '/' + req.files.file.name;
+	
+	fs.readFile(req.files.file.path, function(err, data) {
+		fs.writeFile(file, data, function(err) {
+			if (err)
+				console.log(err);
+			else {
+				response = {
+					message : 'File uploaded successfully.',
+					filename : req.files.file.name
+				};
+			}
+			console.log(response);
+			res.end(JSON.stringify(response));
+		});
+	});
 });
 
 var server = app.listen(8081, function () {
