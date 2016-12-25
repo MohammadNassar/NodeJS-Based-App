@@ -86,6 +86,34 @@ app.post('/file_upload', function(req, res) {
 	});
 });
 
+var user_record = {"user4" : {
+		"name" : "Phil",
+		"password" : "10",
+		"profession" : "Receiptionist",
+		"id" : 4
+	}
+};
+
+app.get('/addUser', function(req, res) {
+	var db_file = __dirname + '/database/users.json';
+	fs.readFile(db_file, 'utf8', function(err, data) {
+		data = JSON.parse(data);
+		data["user4"] = user_record["user4"];
+		fs.writeFile(db_file, JSON.stringify(data), function(err) {
+			if (err)
+				console.log(err);
+			else {
+				response = {
+					message : 'Database updates successfully!',
+					filename : __dirname + '/database/users.json'
+				};
+			}
+		});
+		console.log(data);
+		res.end(JSON.stringify(data));
+	});
+});
+
 var server = app.listen(8081, function () {
 	var host = server.address().address;
 	var port = server.address().port;
