@@ -1,6 +1,19 @@
 
 <html>
+	
+	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
+		<script src="javascript/app.js"></script>
+	</head>
+	
 	<body>
+		
+		<div ng-app="usersInfo" ng-controller="mainCtrl">
+			<h2>List of All Users</h2>
+			<ul>
+				<li ng-repeat="user in all_data.users"> {{ user.name }} - {{ user.profession }} </li>
+			</ul>
+		</div>
 		
 		<br/>
 		<h2>Simple Form</h2>

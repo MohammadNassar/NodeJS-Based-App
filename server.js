@@ -31,6 +31,13 @@ app.get('/listUsers', function(req, res) {
 	});
 });
 
+app.get('/allusers', function(req, res) {
+	fs.readFile(__dirname + '/database/users.json', 'utf8', function(err, data) {
+		console.log('Database records retrieved.');
+		res.json(JSON.parse(data));
+	});
+});
+
 app.get('/ab*cd', function(req, res) {
 	console.log('Received a GET request for page/s \'ab*cd\'');
 	res.send('Page Pattern Matched (Using a Regular Expression)');
