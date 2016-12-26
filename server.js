@@ -114,6 +114,15 @@ app.get('/addUser', function(req, res) {
 	});
 });
 
+app.get('/:id', function(req, res) { // Display a user record by specifying ID in the URL, e.g. http://127.0.0.1:8081/2
+	fs.readFile(__dirname + '/database/users.json', 'utf8', function(err, data) {
+		var users = JSON.parse(data);
+		var user_to_retrieve = users["user" + req.params.id];
+		console.log(user_to_retrieve);
+		res.end(JSON.stringify(user_to_retrieve));
+	});
+});
+
 var server = app.listen(8081, function () {
 	var host = server.address().address;
 	var port = server.address().port;
