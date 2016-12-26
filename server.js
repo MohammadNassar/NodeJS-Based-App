@@ -123,6 +123,26 @@ app.get('/:id', function(req, res) { // Display a user record by specifying ID i
 	});
 });
 
+app.get('/deleteUser/:id', function(req, res) { // Delete a record by specifying its ID in the URL, e.g. http://127.0.0.1:8081/deleteUser/3
+	var db_file = __dirname + '/database/users.json';
+	fs.readFile(db_file, 'utf8', function(err, data) {
+		data = JSON.parse(data);
+		delete data["user" + req.params.id];
+		fs.writeFile(db_file, JSON.stringify(data), function(err) {
+			if (err)
+				console.log(err);
+			else {
+				response = {
+					message : 'Record deleted successfully.',
+					filename : db_file
+				};
+			}
+			console.log(data);
+			res.end(JSON.stringify(data));
+		});
+	});
+});
+
 var server = app.listen(8081, function () {
 	var host = server.address().address;
 	var port = server.address().port;
