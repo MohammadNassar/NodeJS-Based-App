@@ -1,0 +1,29 @@
+
+____________________
+
+// Creating the collection/database
+
+show usersdb
+____________________
+
+// Inserting the documents/data into the collection/database
+
+db.usersdb.insert({"name":"Mohammad", "job":"Consultant", "email":"mohammad@example.com"})
+
+db.usersdb.insert({"name":"John", "job":"Clerk", "email":"john@example.com"})
+
+db.usersdb.insert({"name":"Michael", "job":"Teacher", "email":"michael@example.com"})
+____________________
+
+// Retrieving and displaying documents/data from the collection/database
+
+db.usersdb.find()
+
+db.usersdb.find().pretty()
+____________________
+
+// Removing all documents/data from the collection/database
+
+db.usersdb.remove({"name":"Mohammad"})
+____________________
+

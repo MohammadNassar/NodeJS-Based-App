@@ -12,3 +12,12 @@ app.controller('mainCtrl', ['$scope', '$http', function($scope, $http) {
 	});
 	
 }]);
+
+app.controller('accessdb', function($scope, $http) {
+	
+	$http.get('/mongodblist')
+	.then(function(response) {
+		$scope.users = response.data;
+	});
+	
+});

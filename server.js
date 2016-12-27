@@ -5,6 +5,8 @@ var body_parser = require('body-parser');
 var fs = require('fs');
 var multer = require('multer');
 var cookie_parser = require('cookie-parser');
+var mongojs = require('mongojs');
+var db = mongojs('usersdb', ['usersdb']);
 
 app.use(express.static('public')); // This line allows access to static files, e.g. '/images/bg.png'
 app.use(body_parser.urlencoded({ extended : false }));
@@ -35,6 +37,13 @@ app.get('/allusers', function(req, res) {
 	fs.readFile(__dirname + '/database/users.json', 'utf8', function(err, data) {
 		console.log('Database records retrieved.');
 		res.json(JSON.parse(data));
+	});
+});
+
+app.get('/mongodblist', function(req, res) {
+	db.usersdb.find(function(err, docs) {
+		console.log(docs);
+		res.json(docs);
 	});
 });
 
