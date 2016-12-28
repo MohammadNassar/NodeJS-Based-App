@@ -15,9 +15,21 @@ app.controller('mainCtrl', ['$scope', '$http', function($scope, $http) {
 
 app.controller('accessdb', function($scope, $http) {
 	
-	$http.get('/mongodblist')
-	.then(function(response) {
-		$scope.users = response.data;
-	});
+	var refresh = function() {
+		$http.get('/mongodblist')
+		.then(function(response) {
+			$scope.users = response.data;
+			$scope.user = null;
+		});
+	}
+	
+	refresh();
+	
+	$scope.addUser = function() {console.log($scope.user);
+		$http.post('/mongodblist', $scope.user).then(function(response) {
+			console.log(response.data);
+			refresh();
+		});
+	}
 	
 });

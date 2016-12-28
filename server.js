@@ -10,6 +10,7 @@ var db = mongojs('usersdb', ['usersdb']);
 
 app.use(express.static('public')); // This line allows access to static files, e.g. '/images/bg.png'
 app.use(body_parser.urlencoded({ extended : false }));
+app.use(body_parser.json());
 app.use(multer({ dest : './uploads/' }).array('file'));
 //app.use(multer({ dest : './uploads/' }).any());
 app.use(cookie_parser());
@@ -42,6 +43,14 @@ app.get('/allusers', function(req, res) {
 
 app.get('/mongodblist', function(req, res) {
 	db.usersdb.find(function(err, docs) {
+		console.log(docs);
+		res.json(docs);
+	});
+});
+
+app.post('/mongodblist', function(req, res) {
+	console.log(req.body);
+	db.usersdb.insert(req.body, function(err, docs) {
 		console.log(docs);
 		res.json(docs);
 	});
